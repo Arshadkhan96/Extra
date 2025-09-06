@@ -1,0 +1,50 @@
+/* Review Section Styles */
+.reviewsSection {
+  margin-top: 3rem;
+  padding: 2rem;
+  background: #fff;
+  border-radius: 8px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+}
+
+.reviewsContainer {
+  margin-top: 1.5rem;
+  display: grid;
+  gap: 1.5rem;
+}
+
+.submitReviewBtn {
+  margin-top: 2rem;
+  padding: 0.8rem 1.5rem;
+  background: #2874f0;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-weight: 500;
+  transition: all 0.3s ease;
+}
+
+.submitReviewBtn:hover {
+  background: #1a5bbf;
+}
+
+.noReviews {
+  color: #666;
+  font-style: italic;
+  margin-top: 1rem;
+}
+
+/* Review Dialog Styles */
+.submitDialog {
+  display: flex;
+  flex-direction: column;
+  padding: 20px;
+  min-width: 400px;
+}
+
+@media (max-width: 600px) {
+  .submitDialog {
+    min-width: 300px;
+  }
+}

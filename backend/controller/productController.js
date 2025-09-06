@@ -13,7 +13,7 @@ exports.createProduct = tryCatcherror(async (req, res, next) => {
 });
 
 exports.findAllProduct = tryCatcherror(async (req, res) => {
-  const productPerPage = 3;
+  const productPerPage = 8;
   const totalProduct = await Product.countDocuments();
   const apiFeatures = new ApiFeatures(Product.find(), req.query)
     .search()

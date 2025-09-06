@@ -1,53 +1,47 @@
 import React from 'react';
-import { FaFacebook, FaInstagram, FaTwitter, FaWhatsapp } from "react-icons/fa";
+import { FaFacebook, FaInstagram, FaTwitter, FaWhatsapp, FaLinkedin } from "react-icons/fa";
 import './footer.css';
 
 const Footer = () => {
   return (
-    <div className='footer'>
-      <ul>
-        <li>
-          <h2>AbeBooks</h2>
-          Books, art collectibles
-        </li>
-        <br />
-        <li>
-          <h2>Shopbop</h2>
-          Designer Fashion Brands
-        </li>
-      </ul>
+    <footer className='footer'>
+      <div className="footer-content">
+        <div className="footer-column">
+          <h3 className="footer-heading">AbeBooks</h3>
+          <p className="footer-text">Premium books & art collectibles</p>
+          
+          <h3 className="footer-heading">Shopbop</h3>
+          <p className="footer-text">Luxury fashion brands</p>
+        </div>
 
-      <ul>
-        <li>
-          <h2>Web Services</h2>
-          Scalable Cloud Computing Services
-        </li>
-        <br />
-        <li>
-          <h2>Business</h2>
-          Everything for your business
-        </li>
-      </ul>
+        <div className="footer-column">
+          <h3 className="footer-heading">Web Services</h3>
+          <p className="footer-text">Elite cloud computing solutions</p>
+          
+          <h3 className="footer-heading">Business</h3>
+          <p className="footer-text">Enterprise-grade solutions</p>
+        </div>
 
-      <ul>
-        <li>
-          <h2>Prime Now</h2>
-          2-hour delivery on every item
-        </li>
-        <br />
-        <li>
-          <h2>Prime Music</h2>
-          100 million songs, ad-free<br />
-          Over 15 million podcast episodes
-        </li>
-      </ul>
-      <ul className='social-icons'>
-        <li><FaFacebook className='icon' /></li>
-        <li><FaInstagram className='icon' /></li>
-        <li><FaTwitter className='icon' /></li>
-        <li><FaWhatsapp className='icon' /></li>
-      </ul>
-    </div>
+        <div className="footer-column">
+          <h3 className="footer-heading">Prime Now</h3>
+          <p className="footer-text">Expedited 2-hour delivery</p>
+          
+          <h3 className="footer-heading">Prime Music</h3>
+          <p className="footer-text">100 million ad-free tracks<br />15+ million podcast episodes</p>
+        </div>
+
+        <div className="footer-social">
+          <div className="social-icons">
+            <a href="#" aria-label="Facebook"><FaFacebook className='icon' /></a>
+            <a href="#" aria-label="Instagram"><FaInstagram className='icon' /></a>
+            <a href="#" aria-label="Twitter"><FaTwitter className='icon' /></a>
+            <a href="#" aria-label="WhatsApp"><FaWhatsapp className='icon' /></a>
+            <a href="#" aria-label="LinkedIn"><FaLinkedin className='icon' /></a>
+          </div>
+          <p className="copyright">© 2025 Luxury Brands. All rights reserved.</p>
+        </div>
+      </div>
+    </footer>
   );
 }
 

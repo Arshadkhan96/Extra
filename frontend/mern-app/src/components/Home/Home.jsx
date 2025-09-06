@@ -1,64 +1,64 @@
-import { Fragment, useEffect } from "react";
+import  { Fragment, useEffect } from "react";
 import "./home.css";
 import Product from "./Product";
 import { CiDesktopMouse1 } from "react-icons/ci";
-import {getProduct } from "../../action/productAction.js"
+import { getProduct } from "../../action/productAction";
 import { useSelector, useDispatch } from "react-redux";
-import { Helmet } from "react-helmet";
-import Loader from "../layout/loader/Loader.jsx";
+// import { Helmet } from "react-helmet";
+
+import Loader from "../layout/loader/Loader";
 
 const Home = () => {
   const dispatch = useDispatch();
+  const { products = [], loading = false, error } = useSelector(
+    (state) => state.products
+  );
 
-  // Extracting products and loading state from Redux store
-  const { products, loading } = useSelector((state) => {
-    console.log("Component state:", state.products); // Debugging state
-    return state.products || { products: [], loading: false }; // Fallback to avoid undefined errors
-  });
-
-  // Dispatch action to fetch products on component mount
   useEffect(() => {
-    dispatch(getProduct());
-  }, [dispatch]);
+    // Only fetch products if they haven't been loaded yet
+    if (products.length === 0) {
+      dispatch(getProduct());
+    }
+  }, [dispatch, products.length]);
 
   return (
     <Fragment>
-      {/* Setting the page title */}
-      <Helmet title="Home-page"/> 
-
       <div className="banner">
         <p>Welcome to our site</p>
-        <h1>Find amazing products</h1>
-        <a href="#container">
+        <h1>Find amazing products below</h1>
+        <a href="#container" aria-label="Scroll to products">
           <button>
             Scroll <CiDesktopMouse1 />
           </button>
         </a>
       </div>
 
-      <h2 className="home-Heading">Latest Products</h2>
+      <section className="product-section" id="container">
+        <h2 className="home-heading">Featured Products</h2>
 
-      {loading ? (
-        <Loader />
-      ) : (
-        <Fragment>
+        {loading ? (
+          <div className="loader-wrapper">
+            <Loader />
+          </div>
+        ) : error ? (
+          <p className="error-message">{error}</p>
+        ) : (
           <div className="products-container">
-            {/* Render products */}
-            {products && products.length > 0 ? (
+            {products.length > 0 ? (
               products.map((product) => (
-                <Product key={product._id} product={product} />
+                <Product 
+                  key={product._id} 
+                  product={product} 
+                />
               ))
             ) : (
-              <p>No products available</p>
+              <p className="no-products">No products available</p>
             )}
           </div>
-        </Fragment>
-      )}
-
+        )}
+      </section>
     </Fragment>
   );
-
 };
 
 export default Home;
-

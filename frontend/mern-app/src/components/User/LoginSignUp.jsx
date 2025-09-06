@@ -1,174 +1,102 @@
-// import React, { useState } from "react";
-// import { useDispatch, useSelector } from "react-redux";
-// import { login } from "../../action/userAction";
-// import { Helmet } from "react-helmet";
-// import "./LoginSignUp.css";
-// const LoginSignUp = () => {
-//   const dispatch = useDispatch();
-//   const { loading, error } = useSelector((state) => state.user);
-
-//   const [formData, setFormData] = useState({
-//     email: "",
-//     password: "",
-//   });
-
-//   const [success, setSuccess] = useState("");
-
-//   const handleChange = (e) => {
-//     const { name, value } = e.target; 
-//     setFormData({
-//       ...formData,
-//       [name]: value,
-//     });
-//   };
-
-//   const handleSubmit = (e) => {
-//     e.preventDefault();
-//     setSuccess("");
-
-//     dispatch(login(formData.email, formData.password)) 
-//       .then(() => {
-//         setSuccess("User login successfully!");
-//         setFormData({
-//           email: "",
-//           password: "",
-//         });
-//       })
-//       .catch((error) => {
-//         console.error(error); 
-//       });
-//   };
-
-//   return (
-//     <div className="container">
-//     <div className="SignUp">
-//       <Helmet>
-//         <title>SIGN-UP</title>
-//         <meta name="login" content="SignUpUser" />
-//       </Helmet>
-//       <h1>Login User</h1>
-//       <form onSubmit={handleSubmit}>
-//         {error && <p style={{ color: "red" }}>{error}</p>}
-//         {success && <p style={{ color: "green" }}>{success}</p>}
-
-//         <div>
-//           <label>Email:</label>
-//           <input
-//             type="email"
-//             name="email" 
-//             value={formData.email}
-//             onChange={handleChange}
-//             required
-//           />
-//         </div>
-
-//         <div>
-//           <label>Password:</label>
-//           <input
-//             type="password"
-//             name="password"
-//             value={formData.password}
-//             onChange={handleChange}
-//             required
-//           />
-//         </div>
-
-//         <button type="submit" disabled={loading}>
-//           {loading ? "Logging in..." : "Login"}
-//         </button>
-//       </form>
-//     </div>
-//     </div>
-//   );
-// };
-
-// export default LoginSignUp;
-
-
-// #######################################
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { login } from "../../action/userAction";
 import { Helmet } from "react-helmet";
-import "./LoginSignUp.css";
+import { Link, useNavigate } from "react-router-dom";
+import "./Auth.css";
 
 const LoginSignUp = () => {
-  const dispatch = useDispatch();
-  const { loading, error, isAuthenticated } = useSelector((state) => state.user) || {};
+    const dispatch = useDispatch();
+    const navigate = useNavigate();
+    const { loading, error, isAuthenticated } = useSelector((state) => state.user) || {};
 
-  const [formData, setFormData] = useState({
-    email: "",
-    password: "",
-  });
-
-  const [success, setSuccess] = useState("");
-
-  useEffect(() => {
-    if (isAuthenticated) {
-      setSuccess("User logged in successfully!");
-      setFormData({
+    const [formData, setFormData] = useState({
         email: "",
         password: "",
-      });
-    }
-  }, [isAuthenticated]);
-
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFormData({
-      ...formData,
-      [name]: value,
     });
-  };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    setSuccess("");
+    const [success, setSuccess] = useState("");
 
-    dispatch(login(formData.email, formData.password));
-  };
+    useEffect(() => {
+        if (isAuthenticated) {
+            setSuccess("Login successful! Redirecting...");
+            setTimeout(() => navigate("/"), 1500);
+        }
+    }, [isAuthenticated, navigate]);
 
-  return (
-    <div className="container">
-      <div className="SignUp">
-        <Helmet>
-          <title>SIGN-UP</title>
-          <meta name="login" content="SignUpUser" />
-        </Helmet>
-        <h1>Login User</h1>
-        <form onSubmit={handleSubmit}>
-          {error && <p style={{ color: "red" }}>{error}</p>}
-          {success && <p style={{ color: "green" }}>{success}</p>}
+    const handleChange = (e) => {
+        const { name, value } = e.target;
+        setFormData(prev => ({
+            ...prev,
+            [name]: value,
+        }));
+    };
 
-          <div>
-            <label>Email:</label>
-            <input
-              type="email"
-              name="email"
-              value={formData.email}
-              onChange={handleChange}
-              required
-            />
-          </div>
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        setSuccess("");
+        dispatch(login(formData.email, formData.password));
+    };
 
-          <div>
-            <label>Password:</label>
-            <input
-              type="password"
-              name="password"
-              value={formData.password}
-              onChange={handleChange}
-              required
-            />
-          </div>
+    return (
+        <div className="auth-container">
+            <Helmet>
+                <title>Login | E-Commerce</title>
+            </Helmet>
+            
+            <div className="auth-card">
+                <h2>Welcome Back</h2>
+                <p className="auth-subtitle">Sign in to continue</p>
 
-          <button type="submit" disabled={loading}>
-            {loading ? "Logging In..." : "Login"}
-          </button>
-        </form>
-      </div>
-    </div>
-  );
+                <form onSubmit={handleSubmit} className="auth-form">
+                    {error && <div className="auth-error">{error}</div>}
+                    {success && <div className="auth-success">{success}</div>}
+
+                    <div className="form-group">
+                        <label htmlFor="email">Email Address</label>
+                        <input
+                            id="email"
+                            type="email"
+                            name="email"
+                            value={formData.email}
+                            onChange={handleChange}
+                            required
+                            placeholder="Enter your email"
+                        />
+                    </div>
+
+                    <div className="form-group">
+                        <label htmlFor="password">Password</label>
+                        <input
+                            id="password"
+                            type="password"
+                            name="password"
+                            value={formData.password}
+                            onChange={handleChange}
+                            required
+                            placeholder="Enter your password"
+                        />
+                    </div>
+
+                    <button 
+                        type="submit" 
+                        className="auth-button"
+                        disabled={loading}
+                    >
+                        {loading ? (
+                            <span className="auth-loader">Logging In...</span>
+                        ) : (
+                            "Login"
+                        )}
+                    </button>
+
+                    <div className="auth-footer">
+                        Don't have an account? <Link to="/register">Sign Up</Link>
+                    </div>
+                </form>
+            </div>
+        </div>
+    );
 };
 
 export default LoginSignUp;
